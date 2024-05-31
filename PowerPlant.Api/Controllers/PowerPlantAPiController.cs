@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using PowerPlant.Api.Data;
+using PowerPlant.Domain;
 
 namespace PowerPlant.Api.Controllers
 {
@@ -17,6 +19,12 @@ namespace PowerPlant.Api.Controllers
         public string GetLoadFulfillment()
         {
             return "Hello Powerplant";
+        }
+
+        [HttpPost("productionplan")]
+        public string PostProductionPlan(PayLoadDTO payload)
+        {
+            return "Hello production plan";
         }
     }
 }
