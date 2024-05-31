@@ -1,14 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using PowerPlant.Domain.Models;
+using System.Text.Json.Serialization;
 
-namespace PowerPlant.Domain
+namespace PowerPlant.Api.Data
 {
-    public class PayLoad
+    public class PayloadDTO
     {
         [JsonPropertyName("load")]
         public int Load { get; set; }
         [JsonPropertyName("fuels")]
         public Fuels Fuels { get; set; }
         [JsonPropertyName("powerplants")]
-        public IEnumerable<PowerPlant> PowerPlants { get; set; }
+        public IEnumerable<PowerPlantDTO> PowerPlants { get; set; }
     }
 }

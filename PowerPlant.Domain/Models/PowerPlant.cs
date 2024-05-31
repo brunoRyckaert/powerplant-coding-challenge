@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace PowerPlant.Domain
+namespace PowerPlant.Domain.Models
 {
     public abstract class PowerPlant
     {

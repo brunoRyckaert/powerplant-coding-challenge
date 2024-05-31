@@ -22,7 +22,7 @@ namespace PowerPlant.Api.Controllers
         }
 
         [HttpPost("productionplan")]
-        public string PostProductionPlan(PayLoadDTO payload)
+        public string PostProductionPlan(PayloadDTO payload)
         {
             return "Hello production plan";
         }

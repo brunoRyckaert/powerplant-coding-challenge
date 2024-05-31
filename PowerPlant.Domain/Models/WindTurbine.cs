@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerPlant.Domain
+namespace PowerPlant.Domain.Models
 {
-    public class TurboJet : PowerPlant
+    public class WindTurbine : PowerPlant
     {
     }
 }
