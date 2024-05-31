@@ -1,4 +1,5 @@
-﻿using PowerPlant.Domain.Models;
+﻿using PowerPlant.Api.Helpers;
+using PowerPlant.Domain.Models;
 using System.Text.Json.Serialization;
 
 namespace PowerPlant.Api.Data
@@ -8,7 +9,7 @@ namespace PowerPlant.Api.Data
         [JsonPropertyName("name")]
         public string Name { get; set; }
         [JsonPropertyName("p")]
-        [JsonConverter(typeof(NumericPrecisionJsonConverter))]
+        [JsonConverter<int>(typeof(DecimalPrecisionJsonConverter), parameter: 1)] // the parameter here is the precision to be used for the serialization
         public decimal Power { get; set; }
 
         public static ProductionPlanItemDto FromProductionPlanItem(ProductionPlanItem productionPlanItem)
