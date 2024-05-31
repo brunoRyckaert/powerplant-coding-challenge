@@ -3,6 +3,8 @@ using PowerPlant.Api.Data;
 using PowerPlant.Domain;
 using PowerPlant.Domain.Logic;
 using PowerPlant.Domain.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PowerPlant.Api.Controllers
 {
@@ -20,17 +22,14 @@ namespace PowerPlant.Api.Controllers
         }
 
         [HttpPost("productionplan")]
-        public object PostProductionPlan(PayloadDTO payloadDto)
+        public IEnumerable<ProductionPlanItemDto> PostProductionPlan(PayloadDTO payloadDto)
         {
             var payload = payloadDto.ToPayload();
             var productionPlan = priceCalculator
                 .CalculateProductionPlan(payload)
-                .Select(pi => new
-                {
-                    name = pi.Plant.Name,
-                    p = pi.Power
-                })
+                .Select(pi => ProductionPlanItemDto.FromProductionPlanItem(pi))
                 .ToArray();
+
             return productionPlan;
         }
     }
