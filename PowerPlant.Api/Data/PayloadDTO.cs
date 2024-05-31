@@ -8,9 +8,9 @@ namespace PowerPlant.Api.Data
         [JsonPropertyName("load")]
         public int Load { get; set; }
         [JsonPropertyName("fuels")]
-        public Fuels Fuels { get; set; }
+        public Fuels Fuels { get; set; } = new Fuels();
         [JsonPropertyName("powerplants")]
-        public IEnumerable<PowerPlantDTO> PowerPlants { get; set; }
+        public IEnumerable<PowerPlantDTO> PowerPlants { get; set; } = [];
 
         public Payload ToPayload()
         {

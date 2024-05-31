@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PowerPlant.Api.Data;
 using PowerPlant.Domain;
+using PowerPlant.Domain.Logic;
 using PowerPlant.Domain.Models;
 
 namespace PowerPlant.Api.Controllers
@@ -10,10 +11,12 @@ namespace PowerPlant.Api.Controllers
     public class PowerPlantApiController : ControllerBase
     {
         private readonly ILogger<PowerPlantApiController> _logger;
+        private PowerPlantProductionPlanner priceCalculator;
 
-        public PowerPlantApiController(ILogger<PowerPlantApiController> logger)
+        public PowerPlantApiController(ILogger<PowerPlantApiController> logger, PowerPlantProductionPlanner priceCalculator)
         {
             _logger = logger;
+            this.priceCalculator = priceCalculator;
         }
 
         [HttpGet("GetLoadFulfillment")]
@@ -26,7 +29,7 @@ namespace PowerPlant.Api.Controllers
         public IEnumerable<ProductionPlanItem> PostProductionPlan(PayloadDTO payloadDto)
         {
             var payload = payloadDto.ToPayload();
-            var productionPlan = new List<ProductionPlanItem> { new ProductionPlanItem { Name = "windpark1", Power = 90.0M }, new ProductionPlanItem { Name = "gasfiredbig1", Power = 460.0M } };
+            var productionPlan = priceCalculator.CalculateProductionPlan(payload);
             return productionPlan;
         }
     }
