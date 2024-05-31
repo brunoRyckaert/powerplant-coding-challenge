@@ -1,0 +1,6 @@
+@PowerPlant.Api_HostAddress = http://localhost:8888
+
+GET {{PowerPlant.Api_HostAddress}}/powerplant/
+Accept: application/json
+
+###
