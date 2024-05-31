@@ -11,5 +11,16 @@ namespace PowerPlant.Api.Data
         public Fuels Fuels { get; set; }
         [JsonPropertyName("powerplants")]
         public IEnumerable<PowerPlantDTO> PowerPlants { get; set; }
+
+        public Payload ToPayload()
+        {
+            return
+                new Payload
+                {
+                    Load = Load,
+                    Fuels = Fuels,
+                    PowerPlants = PowerPlants.Select(powerPlantDTO => powerPlantDTO.ToPowerPlant())
+                };
+        }
     }
 }
