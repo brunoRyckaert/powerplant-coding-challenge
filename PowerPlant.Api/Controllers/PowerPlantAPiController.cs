@@ -19,17 +19,18 @@ namespace PowerPlant.Api.Controllers
             this.priceCalculator = priceCalculator;
         }
 
-        [HttpGet("GetLoadFulfillment")]
-        public string GetLoadFulfillment()
-        {
-            return "Hello Powerplant";
-        }
-
         [HttpPost("productionplan")]
-        public IEnumerable<ProductionPlanItem> PostProductionPlan(PayloadDTO payloadDto)
+        public object PostProductionPlan(PayloadDTO payloadDto)
         {
             var payload = payloadDto.ToPayload();
-            var productionPlan = priceCalculator.CalculateProductionPlan(payload);
+            var productionPlan = priceCalculator
+                .CalculateProductionPlan(payload)
+                .Select(pi => new
+                {
+                    name = pi.Plant.Name,
+                    p = pi.Power
+                })
+                .ToArray();
             return productionPlan;
         }
     }

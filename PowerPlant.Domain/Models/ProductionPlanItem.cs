@@ -4,9 +4,7 @@ namespace PowerPlant.Domain.Models
 {
     public class ProductionPlanItem
     {
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-        [JsonPropertyName("p")]
+        public PowerPlant Plant { get; set; }
         public decimal Power { get; set; }
     }
 }
