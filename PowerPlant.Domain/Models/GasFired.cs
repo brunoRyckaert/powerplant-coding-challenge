@@ -8,5 +8,14 @@ namespace PowerPlant.Domain.Models
 {
     public class GasFired : PowerPlant
     {
+        public override decimal CostPerMwh(Fuels fuels)
+        {
+            return fuels.GasPrice / this.Efficiency;
+        }
+
+        public override decimal MaxOutput(Fuels fuels)
+        {
+            return this.Pmax;
+        }
     }
 }
