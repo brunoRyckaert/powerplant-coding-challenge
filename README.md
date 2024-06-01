@@ -12,7 +12,7 @@ Make sure you have the dotnet CLI tools installed.
 
 To build and run from the command line interface, execute the following command:
 
-`dotnet run --project .\PowerPlant.Api`
+`dotnet run --project ./PowerPlant.Api`
 
 
 
@@ -22,7 +22,7 @@ Make sure you have Docker installed.
 
 First, build the image. Run this from the solution root:
 
-`docker build . -f .\PowerPlant.Api\Dockerfile -t powerplantapi`
+`docker build . -f ./PowerPlant.Api/Dockerfile -t powerplantapi`
 
 After successfully building the image, you can run it in a container:
 
