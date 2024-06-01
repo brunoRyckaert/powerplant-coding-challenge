@@ -159,6 +159,25 @@ namespace PowerPlant.Tests
             // total = 2.9
             Assert.Equal(2.9M, costPerMwh);
         }
+        [Fact]
+        public void Co2CostForGasFired()
+        {
+            var fuels = new Fuels { GasPrice = 1, KerosinePrice = 1.1M, Co2Price = 1 };
+            var gasPlant = plantFactory.NewPowerPlant("gasfired");
+            var kerosinePlant = plantFactory.NewPowerPlant("turbojet");
 
+            gasPlant.Efficiency = kerosinePlant.Efficiency = 0.75M;
+
+            gasPlant.Pmax = kerosinePlant.Pmax = 100;
+
+            var powerplants = new List<PowerPlant.Domain.Models.PowerPlant> { gasPlant, kerosinePlant };
+
+            var payload = new Payload { Fuels = fuels, PowerPlants = powerplants, Load = 100 };
+
+            var plan = planner.CalculateProductionPlan(payload);
+
+            Assert.Equal(0, plan.First(pi => pi.Plant is GasFired).Power);
+            Assert.Equal(100, plan.First(pi => pi.Plant is TurboJet).Power);
+        }
     }
 }
