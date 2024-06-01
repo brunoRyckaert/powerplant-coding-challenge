@@ -10,7 +10,7 @@ namespace PowerPlant.Domain.Models
     {
         public override decimal CostPerMwh(Fuels fuels)
         {
-            return fuels.GasPrice / this.Efficiency;
+            return fuels.GasPrice / this.Efficiency + 0.3M * fuels.Co2Price;
         }
 
         public override decimal MaxOutput(Fuels fuels)
