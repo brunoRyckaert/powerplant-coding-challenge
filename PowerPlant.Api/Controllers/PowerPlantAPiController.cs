@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using PowerPlant.Api.Data;
-using PowerPlant.Domain;
 using PowerPlant.Domain.Logic;
-using PowerPlant.Domain.Models;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace PowerPlant.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/")]
     public class PowerPlantApiController : ControllerBase
     {
         private readonly ILogger<PowerPlantApiController> _logger;
@@ -22,15 +18,23 @@ namespace PowerPlant.Api.Controllers
         }
 
         [HttpPost("productionplan")]
-        public IEnumerable<ProductionPlanItemDto> PostProductionPlan(PayloadDTO payloadDto)
+        public ActionResult<IEnumerable<ProductionPlanItemDto>> PostProductionPlan(PayloadDTO payloadDto)
         {
-            var payload = payloadDto.ToPayload();
-            var productionPlan = priceCalculator
-                .CalculateProductionPlan(payload)
-                .Select(pi => ProductionPlanItemDto.FromProductionPlanItem(pi))
-                .ToArray();
+            try
+            {
+                var payload = payloadDto.ToPayload();
+                var productionPlan = priceCalculator
+                    .CalculateProductionPlan(payload)
+                    .Select(pi => ProductionPlanItemDto.FromProductionPlanItem(pi))
+                    .ToArray();
 
-            return productionPlan;
+                return Ok(productionPlan);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
