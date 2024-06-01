@@ -11,9 +11,6 @@ namespace PowerPlant.Domain.Logic
             // check if enough power can be produced to satisfy demanded load
             var plannedLoad = productionPlan.Sum(p => p.Power);
 
-            if (plannedLoad < payload.Load)
-                throw new ArgumentException($"Insufficient power production to satisfy demanded load: {productionPlan.Sum(p => p.Power)} < {payload.Load}");
-
             if (plannedLoad != payload.Load)
                 throw new ArgumentException($"Impossible to create valid production plan to satisfy demanded load, possibly due to Pmin restrictions: {plannedLoad} > {payload.Load}");
 
@@ -44,13 +41,23 @@ namespace PowerPlant.Domain.Logic
                 productionPlan.Add(productionPlanItem);
             }
 
+            var plannedLoad = productionPlan.Sum(p => p.Power);
+
+            if (plannedLoad < payload.Load)
+                throw new ArgumentException($"Insufficient power production to satisfy demanded load: {productionPlan.Sum(p => p.Power)} < {payload.Load}");
+
             // trim off potential excessive load due to Pmin
-            EnsureMinimumProductionRespected(payload, productionPlan);
+            TrimExcessiveProduction(payload, productionPlan);
 
             return productionPlan;
         }
 
-        private static void EnsureMinimumProductionRespected(Payload payload, IEnumerable<ProductionPlanItem> productionPlan)
+        /// <summary>
+        /// If the last powerplant to provide power has a Pmin below what is needed to satisfy the demand, there will be an excess of planned power
+        /// This method will make sure that we don't plan to produce more than the demand
+        /// </summary>
+
+        private static void TrimExcessiveProduction(Payload payload, IEnumerable<ProductionPlanItem> productionPlan)
         {
             foreach (var planItem in productionPlan.AsEnumerable().Reverse())
             {
