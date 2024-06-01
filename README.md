@@ -4,7 +4,7 @@
 
 ### Using Visual Studio
 
-Build and run the included launch profile (http) directly from Visual Studio
+Open the solution in Visual Studio. Build and run the included launch profile (http) directly from Visual Studio.
 
 ### From the CLI
 
