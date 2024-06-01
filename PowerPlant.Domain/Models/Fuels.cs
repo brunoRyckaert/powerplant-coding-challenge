@@ -9,8 +9,8 @@ namespace PowerPlant.Domain.Models
         [JsonPropertyName("kerosine(euro/MWh)")]
         public decimal KerosinePrice { get; set; }
         [JsonPropertyName("co2(euro/ton)")]
-        public int Co2Price { get; set; }
+        public decimal Co2Price { get; set; }
         [JsonPropertyName("wind(%)")]
-        public int WindPercentage { get; set; }
+        public decimal WindPercentage { get; set; }
     }
 }
